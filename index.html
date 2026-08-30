@@ -52,10 +52,13 @@
   .dash { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px 16px; margin-bottom: 12px; }
   .kcal-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 4px; }
   .kcal-big { font-family: var(--num); font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: -.02em; }
+  .kcal-big.over { color: var(--warn); }
   .kcal-goal { font-family: var(--num); font-size: 15px; color: var(--ink-soft); text-align: right; }
   .kcal-sub { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; }
-  .kcal-bar { height: 8px; background: var(--bg); border-radius: 5px; overflow: hidden; margin: 12px 0 18px; }
+  .kcal-bar { height: 8px; background: var(--bg); border-radius: 5px; overflow: hidden; margin: 12px 0 8px; }
   .kcal-bar > i { display: block; height: 100%; background: var(--accent); border-radius: 5px; transition: width .25s; }
+  .kcal-adjust { font-size: 12px; color: var(--ink-soft); margin: 0 0 14px; min-height: 15px; }
+  .kcal-adjust b { color: var(--ink); font-weight: 600; }
 
   .macros { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
   .macro .m-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 5px; }
@@ -78,8 +81,20 @@
   .week { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
   .week .w-label { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; }
   .week .w-val { font-family: var(--num); font-size: 15px; font-weight: 600; }
+  .week .w-val.pos { color: var(--warn); }
+  .week .w-val.neg { color: var(--carbs); }
 
   .section-h { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 600; margin: 0 2px 8px; display:flex; justify-content:space-between; align-items:center;}
+
+  /* Phasen-Zähler */
+  .phase { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; }
+  .phase .ph-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+  .phase .ph-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .phase .ph-since { font-family: var(--num); font-size: 12px; color: var(--ink-soft); }
+  .phase .ph-big { font-family: var(--num); font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -.01em; }
+  .phase .ph-big.pos { color: var(--warn); }
+  .phase .ph-big.neg { color: var(--carbs); }
+  .phase .ph-meta { font-family: var(--num); font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
 
   /* Entry list */
   .entry { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
@@ -89,6 +104,30 @@
   .entry .e-kcal { font-family: var(--num); font-weight: 600; font-size: 15px; }
   .entry .e-del { background: none; border: none; color: var(--ink-soft); font-size: 22px; padding: 0 4px; line-height: 1; cursor: pointer; }
   .empty { text-align: center; color: var(--ink-soft); padding: 30px 16px; font-size: 14px; }
+
+  /* Verlauf: kompakte Tageszeile */
+  .dayrow { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer; }
+  .dayrow .dr-main { flex: 1; min-width: 0; }
+  .dayrow .dr-name { font-weight: 600; font-size: 15px; font-family: var(--num); }
+  .dayrow .dr-meta { font-family: var(--num); font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .dayrow .dr-diff { font-family: var(--num); font-size: 15px; font-weight: 600; text-align: right; }
+  .dayrow .dr-diff.pos { color: var(--warn); }
+  .dayrow .dr-diff.neg { color: var(--ink-soft); }
+  .dayrow .dr-diff.big { text-decoration: underline; text-decoration-color: var(--warn); text-underline-offset: 3px; }
+  .dayrow .dr-kcal { font-family: var(--num); font-size: 12px; color: var(--ink-soft); }
+
+  .agg-wrap { margin-top: 6px; }
+  .agg-wrap > summary { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 600; cursor: pointer; padding: 10px 2px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .agg-wrap > summary::-webkit-details-marker { display: none; }
+  .agg-wrap > summary::after { content: "›"; transform: rotate(90deg); transition: transform .2s; color: var(--ink-soft); }
+  .agg-wrap[open] > summary::after { transform: rotate(-90deg); }
+  .agg-row { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+  .agg-row .ag-label { font-size: 13px; font-weight: 600; }
+  .agg-row .ag-span { font-family: var(--num); font-size: 11px; color: var(--ink-soft); margin-top: 1px; }
+  .agg-row .ag-sum { font-family: var(--num); font-size: 15px; font-weight: 600; text-align: right; }
+  .agg-row .ag-sum.pos { color: var(--warn); }
+  .agg-row .ag-sum.neg { color: var(--carbs); }
+  .agg-row .ag-avg { font-family: var(--num); font-size: 11px; color: var(--ink-soft); }
 
   /* Catalog */
   .cat-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -116,11 +155,9 @@
   .field-kcal { position: relative; }
   .field-kcal > input { padding-right: 46px; text-align: right; }
   .field-kcal > .unit { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); font-size: 13px; font-family: var(--num); pointer-events: none; }
-  .stepper { display: flex; gap: 8px; align-items: stretch; }
-  .stepper > input, .stepper > .field-kcal { flex: 1; }
-  .stepper > input { width: auto; }
-  .step-btn { flex: 0 0 auto; width: 48px; min-height: 46px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 10px; font-size: 22px; font-weight: 600; line-height: 1; cursor: pointer; }
-  .step-btn:active { background: var(--bg); }
+  .stepper { display: grid; grid-template-columns: 48px 1fr 48px; gap: 8px; align-items: stretch; }
+  .step-btn, #offSign { min-height: 46px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 10px; font-size: 22px; font-weight: 600; line-height: 1; cursor: pointer; }
+  .step-btn:active, #offSign:active { background: var(--bg); }
   .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
   .grid4 label.f { margin-top: 0; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -182,6 +219,7 @@
         <div class="kcal-goal">Ziel<br><span id="kcalGoal">–</span></div>
       </div>
       <div class="kcal-bar"><i id="kcalBar" style="width:0%"></i></div>
+      <div class="kcal-adjust" id="kcalAdjust"></div>
       <div class="macros">
         <div class="macro protein">
           <div class="m-top"><span class="m-label">Eiweiß</span><span class="m-goal" id="pGoal"></span></div>
@@ -207,7 +245,7 @@
     </div>
 
     <div class="week">
-      <span class="w-label">7-Tage-Saldo</span>
+      <span class="w-label">Konto (7 Tage)</span>
       <span class="w-val num" id="weekSaldo">–</span>
     </div>
 
@@ -242,13 +280,14 @@
       <button class="step-btn" data-step="25" data-target="setBase">+</button>
     </div>
     <label class="f" style="margin-top:14px">Über-/Unterschuss</label>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button class="btn ghost small" id="offSign" data-sign="+" style="width:60px;flex:0 0 auto;margin:0;font-size:20px">＋</button>
-      <div class="field-kcal" style="flex:1">
-        <input class="num-in" id="setOffset" type="number" inputmode="numeric" style="width:100%" placeholder="0">
+    <div class="stepper">
+      <button id="offSign" data-sign="+">＋</button>
+      <div class="field-kcal">
+        <input class="num-in" id="setOffset" type="number" inputmode="numeric" placeholder="0">
         <span class="unit">kcal</span>
       </div>
     </div>
+    <p class="hint">Vorzeichen wechseln (＋ ↔ −) startet eine neue Phase: der Phasen-Zähler im Verlauf beginnt bei 0.</p>
 
     <details style="margin-top:18px">
       <summary style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);font-weight:600;cursor:pointer;padding:6px 2px">Makroziele</summary>
@@ -279,14 +318,20 @@
 <!-- ============ VERLAUF ============ -->
 <div class="screen" id="screen-verlauf">
   <div class="wrap">
+    <div class="section-h"><span id="phaseHead">Phase</span></div>
+    <div class="phase" id="phaseBox"></div>
+
     <div class="section-h"><span>Daten</span></div>
     <div class="list-item" id="openBackup" style="cursor:pointer;margin-bottom:16px">
       <div class="li-main"><div class="li-name">Sicherung</div>
       <div class="li-meta">Backup exportieren oder laden</div></div>
       <div class="li-btn">›</div>
     </div>
+
     <div class="section-h"><span>Letzte Tage</span></div>
     <div id="histList"></div>
+    <details class="agg-wrap" id="weekWrap"><summary>Wochen</summary><div id="weekList"></div></details>
+    <details class="agg-wrap" id="monthWrap"><summary>Monate</summary><div id="monthList"></div></details>
   </div>
 </div>
 
@@ -369,6 +414,10 @@
 <div class="sheet" id="daySheet">
   <div class="sheet-head"><h2 id="dayTitle">Tag</h2><button class="x" data-close-day>×</button></div>
   <div class="sheet-body">
+    <div class="week" style="margin-bottom:8px">
+      <span class="w-label">Aktivkalorien</span>
+      <input class="num-in" id="dayActivity" type="number" inputmode="numeric" placeholder="0" style="width:120px;padding:8px 10px;text-align:right">
+    </div>
     <div class="week" style="margin-bottom:12px">
       <span class="w-label">Summe / Ziel</span>
       <span class="w-val num" id="dayTotal">–</span>
@@ -403,13 +452,14 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6
 const todayStr = () => new Date().toISOString().slice(0,10);
 const dateLabel = ds => new Date(ds).toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit"});
 const round = (n,d=0) => { const f = Math.pow(10,d); return Math.round(n*f)/f; };
+const SIGNED = n => (n>0?"+":"") + n;
 
 const defaultState = () => ({
   ingredients: [],
   portions: [],
   days: {},
   openDay: null,
-  settings: { base: 2750, activity: 0, offset: 300, p: 150, fmin: 70, fmax: 110 }
+  settings: { base: 2750, offset: 300, p: 150, fmin: 70, fmax: 110, phaseStart: null, phaseSign: null }
 });
 
 function seedState(){
@@ -495,21 +545,55 @@ function toast(msg) {
 
 // ---- Day helpers ----
 function getDay(d) {
-  if (!state.days[d]) state.days[d] = { entries: [], goalSnapshot: null };
+  if (!state.days[d]) state.days[d] = { entries: [], goalSnapshot: null, activity: 0 };
+  if (state.days[d].activity == null) state.days[d].activity = 0;
   return state.days[d];
 }
+function dayActivity(d){ const day = state.days[d]; return (day && day.activity != null) ? day.activity : 0; }
 function dayTotals(d) {
   const day = state.days[d]; const t = { kcal:0, p:0, f:0, c:0 };
   if (!day) return t;
   day.entries.forEach(e => { t.kcal+=e.kcal; t.p+=e.p; t.f+=e.f; t.c+=e.c; });
   return t;
 }
-function liveGoal(){ const s = state.settings; return s.base + s.activity + (s.offset || 0); }
+// Grundziel eines Tages (ohne Übertrag): Grundumsatz + Aktivkalorien des Tages + Über-/Unterschuss
+function baseGoal(d){ const s = state.settings; return s.base + dayActivity(d) + (s.offset || 0); }
+// Ziel eines Tages: geschlossene Tage eingefroren, offener/live über baseGoal
 function dayGoalKcal(d) {
-  if (d === state.openDay) return liveGoal();   // offener Tag: immer aktueller Stand
+  if (d === state.openDay) return baseGoal(d);
   const day = state.days[d];
   if (day && day.goalSnapshot != null) return day.goalSnapshot;
-  return liveGoal();
+  return baseGoal(d);
+}
+// rollierender 7-Tage-Saldo (abgeschlossene Tage mit Einträgen), Basis für den Übertrag
+function rollingSaldo(){
+  const today = todayStr();
+  const cut = new Date(today); cut.setDate(cut.getDate()-6);
+  const cutStr = cut.toISOString().slice(0,10);
+  let sum = 0;
+  Object.keys(state.days).forEach(d=>{
+    const day = state.days[d];
+    if (!day.entries.length) return;
+    if (d === state.openDay) return;         // offener Tag zählt noch nicht
+    if (d < cutStr || d > today) return;      // außerhalb 7-Tage-Fenster
+    sum += dayTotals(d).kcal - dayGoalKcal(d);
+  });
+  return Math.round(sum);
+}
+// effektives Tagesziel heute = Grundziel − halber Saldo (Übertrag über 2 Tage)
+function effectiveGoal(){ return Math.round(baseGoal(state.openDay) - rollingSaldo()/2); }
+// Phasen-Zähler: kumulierte Bilanz seit Phasenbeginn
+function phaseCounter(){
+  const start = state.settings.phaseStart || todayStr();
+  let sum=0, days=0;
+  Object.keys(state.days).forEach(d=>{
+    const day = state.days[d];
+    if (!day.entries.length) return;
+    if (d < start) return;
+    sum += dayTotals(d).kcal - dayGoalKcal(d);
+    days++;
+  });
+  return { sum: Math.round(sum), days, start };
 }
 
 // ---- Nährwert-Berechnung ----
@@ -539,12 +623,26 @@ function renderToday() {
     $("#openDayText").textContent = "Offener Tag ist " + dateLabel(d) + ". Schließe ihn ab, um " + dateLabel(todayStr()) + " zu starten.";
   } else { banner.style.display = "none"; }
   const tot = dayTotals(d);
-  const goal = dayGoalKcal(d);
+  const grund = baseGoal(d);
+  const saldo = rollingSaldo();
+  const goal = Math.round(grund - saldo/2);   // effektives Tagesziel mit Übertrag
   const s = state.settings;
 
+  const over = tot.kcal - grund > 500;         // Tagesausreißer-Schwelle (Überschuss)
   $("#kcalNow").textContent = Math.round(tot.kcal);
+  $("#kcalNow").classList.toggle("over", over);
   $("#kcalGoal").textContent = goal;
-  $("#kcalBar").style.width = Math.min(100, goal? tot.kcal/goal*100 : 0) + "%";
+  $("#kcalBar").style.width = Math.min(100, goal>0 ? tot.kcal/goal*100 : 0) + "%";
+
+  // Konto / Anpassungs-Hinweis
+  const adj = $("#kcalAdjust");
+  if (Math.abs(saldo) >= 50) {
+    const shift = Math.round(saldo/2);
+    adj.innerHTML = "Konto <b>" + SIGNED(saldo) + "</b> · Grundziel " + grund +
+      " · heute <b>" + SIGNED(-shift) + "</b> angepasst";
+  } else {
+    adj.innerHTML = "Konto ausgeglichen · Ziel = Grundumsatz + Aktiv + Über-/Unterschuss";
+  }
 
   // Eiweiß
   $("#pNow").textContent = round(tot.p);
@@ -558,18 +656,20 @@ function renderToday() {
   $("#fBar").style.width = Math.min(100, s.fmax? tot.f/s.fmax*100 : 0) + "%";
   setDot("#fDot", tot.f < s.fmin ? "under" : (tot.f > s.fmax ? "over" : "ok"));
 
-  // KH (Rest der Kalorien)
+  // KH (Rest der Kalorien, gegen effektives Ziel)
   const restKcal = goal - (s.p*4) - (((s.fmin+s.fmax)/2)*9);
   const cGoal = Math.max(0, round(restKcal/4));
   $("#cNow").textContent = round(tot.c);
   $("#cGoal").textContent = "≈ " + cGoal;
   $("#cBar").style.width = Math.min(100, cGoal? tot.c/cGoal*100 : 0) + "%";
 
-  // Wochensaldo
-  $("#weekSaldo").textContent = weekSaldoText();
+  // Konto-Zeile
+  const ws = $("#weekSaldo");
+  ws.textContent = saldo===0 ? "±0 kcal" : SIGNED(saldo) + " kcal";
+  ws.className = "w-val num" + (saldo>0?" pos":(saldo<0?" neg":""));
 
   // Aktivkalorien-Feld (offener Tag)
-  $("#todayActivity").value = state.settings.activity || "";
+  $("#todayActivity").value = dayActivity(d) || "";
 
   // Einträge
   const list = $("#entryList");
@@ -589,23 +689,6 @@ function renderToday() {
   }
 }
 function setDot(sel, cls) { const el = $(sel); el.className = "dot " + cls; }
-
-function weekSaldoText() {
-  let eaten = 0, goalSum = 0, counted = 0;
-  for (let i=0;i<7;i++){
-    const dt = new Date(); dt.setDate(dt.getDate()-i);
-    const ds = dt.toISOString().slice(0,10);
-    if (state.days[ds] && state.days[ds].entries.length){
-      eaten += dayTotals(ds).kcal;
-      goalSum += dayGoalKcal(ds);
-      counted++;
-    }
-  }
-  if (!counted) return "–";
-  const diff = Math.round(eaten - goalSum);
-  const sign = diff > 0 ? "+" : "";
-  return `${sign}${diff} kcal (${counted} T.)`;
-}
 
 // ================= RENDER: KATALOG =================
 let catMode = "portions";
@@ -637,19 +720,102 @@ function renderCatalog() {
 }
 
 // ================= RENDER: VERLAUF =================
+function isoWeekKey(ds){
+  const d = new Date(ds + "T00:00:00Z");
+  const dayNum = (d.getUTCDay() + 6) % 7;
+  d.setUTCDate(d.getUTCDate() - dayNum + 3);
+  const firstThu = new Date(Date.UTC(d.getUTCFullYear(),0,4));
+  const week = 1 + Math.round(((d - firstThu)/86400000 - 3 + ((firstThu.getUTCDay()+6)%7))/7);
+  return d.getUTCFullYear() + "-W" + String(week).padStart(2,"0");
+}
+function aggregate(keyFn){
+  const g = {};
+  Object.keys(state.days).forEach(d=>{
+    const day = state.days[d];
+    if (!day.entries.length) return;
+    const k = keyFn(d);
+    if (!g[k]) g[k] = { sum:0, days:0, first:d, last:d };
+    g[k].sum += dayTotals(d).kcal - dayGoalKcal(d);
+    g[k].days++;
+    if (d < g[k].first) g[k].first = d;
+    if (d > g[k].last) g[k].last = d;
+  });
+  return g;
+}
+function diffClass(diff){ return diff>0 ? "pos" : "neg"; }
+
 function renderHistory() {
+  // ----- Phasen-Zähler -----
+  const pc = phaseCounter();
+  const isDefi = state.settings.offset < 0;
+  $("#phaseHead").textContent = isDefi ? "Phase · Definition" : "Phase · Masse";
+  const box = $("#phaseBox");
+  const avg = pc.days ? Math.round(pc.sum / pc.days) : 0;
+  const bigCls = pc.sum>0 ? "pos" : (pc.sum<0 ? "neg" : "");
+  box.innerHTML =
+    '<div class="ph-head">' +
+      '<span class="ph-name">' + (isDefi ? "Definition" : "Masse") + '</span>' +
+      '<span class="ph-since">seit ' + dateLabel(pc.start) + '</span>' +
+    '</div>' +
+    '<div class="ph-big num ' + bigCls + '">' + SIGNED(pc.sum) + ' kcal</div>' +
+    '<div class="ph-meta">' + pc.days + ' Tage · Ø ' + SIGNED(avg) + '/Tag · kumulierte Bilanz gegen Ziel</div>';
+
+  // ----- Tagesliste (gestaffelt: 2 detailliert, dann kompakt bis 14) -----
   const list = $("#histList");
   const days = Object.keys(state.days).filter(d => state.days[d].entries.length).sort().reverse();
-  if (!days.length) { list.innerHTML = '<div class="empty">Noch keine Tage erfasst.</div>'; return; }
-  list.innerHTML = days.map(d => {
-    const t = dayTotals(d); const g = dayGoalKcal(d);
-    const diff = Math.round(t.kcal - g); const sign = diff>0?"+":"";
-    const dd = new Date(d).toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit"});
-    return `<div class="list-item" data-day-open="${d}" style="cursor:pointer">
-      <div class="li-main"><div class="li-name num">${dd}</div>
-      <div class="li-meta">E ${round(t.p)} · F ${round(t.f)} · KH ${round(t.c)}</div></div>
-      <div style="text-align:right"><div class="num" style="font-weight:600">${Math.round(t.kcal)}</div>
-      <div class="num" style="font-size:12px;color:var(--ink-soft)">${sign}${diff}</div></div>
+  if (!days.length) {
+    list.innerHTML = '<div class="empty">Noch keine Tage erfasst.</div>';
+  } else {
+    const recent = days.slice(0, 14);
+    list.innerHTML = recent.map((d,idx) => {
+      const t = dayTotals(d); const g = dayGoalKcal(d);
+      const diff = Math.round(t.kcal - g);
+      const big = Math.abs(diff) > 500;
+      const dd = new Date(d).toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit"});
+      if (idx < 2) {
+        // detailliert
+        return `<div class="dayrow" data-day-open="${d}">
+          <div class="dr-main"><div class="dr-name">${dd}</div>
+          <div class="dr-meta">${Math.round(t.kcal)} / ${g} · E ${round(t.p)} · F ${round(t.f)} · KH ${round(t.c)}</div></div>
+          <div class="dr-diff ${diffClass(diff)} ${big?"big":""}">${SIGNED(diff)}</div>
+        </div>`;
+      }
+      // kompakt: nur Abweichung
+      return `<div class="dayrow" data-day-open="${d}">
+        <div class="dr-main"><div class="dr-name">${dd}</div></div>
+        <div style="text-align:right">
+          <div class="dr-diff ${diffClass(diff)} ${big?"big":""}">${SIGNED(diff)}</div>
+          <div class="dr-kcal">${Math.round(t.kcal)} kcal</div>
+        </div>
+      </div>`;
+    }).join("");
+  }
+
+  // ----- Wochen -----
+  const weeks = aggregate(isoWeekKey);
+  renderAgg($("#weekList"), $("#weekWrap"), weeks, k => "KW " + k.split("-W")[1]);
+
+  // ----- Monate -----
+  const months = aggregate(d => d.slice(0,7));
+  renderAgg($("#monthList"), $("#monthWrap"), months, k => {
+    const [y,m] = k.split("-");
+    return new Date(y, m-1, 1).toLocaleDateString("de-DE",{month:"long",year:"numeric"});
+  });
+}
+function renderAgg(listEl, wrapEl, groups, labelFn){
+  const keys = Object.keys(groups).sort().reverse();
+  if (!keys.length) { wrapEl.style.display = "none"; return; }
+  wrapEl.style.display = "block";
+  listEl.innerHTML = keys.map(k => {
+    const g = groups[k];
+    const sum = Math.round(g.sum);
+    const avg = g.days ? Math.round(sum/g.days) : 0;
+    const span = dateLabel(g.first) + "–" + dateLabel(g.last);
+    const cls = sum>0 ? "pos" : (sum<0 ? "neg" : "");
+    return `<div class="agg-row">
+      <div><div class="ag-label">${esc(labelFn(k))}</div><div class="ag-span">${span} · ${g.days} T.</div></div>
+      <div style="text-align:right"><div class="ag-sum num ${cls}">${SIGNED(sum)}</div>
+      <div class="ag-avg">Ø ${SIGNED(avg)}/T.</div></div>
     </div>`;
   }).join("");
 }
@@ -793,20 +959,33 @@ function readOffset(){
   const mag = Math.abs(Number($("#setOffset").value)||0);
   return ($("#offSign").dataset.sign === "-" ? -1 : 1) * mag;
 }
+// Über-/Unterschuss ändern; Vorzeichenwechsel = neue Phase
+function applyOffsetChange(){
+  const newOff = readOffset();
+  const oldSign = state.settings.phaseSign || (state.settings.offset < 0 ? "-" : "+");
+  const newSign = newOff < 0 ? "-" : (newOff > 0 ? "+" : oldSign);   // 0 → kein Wechsel
+  state.settings.offset = newOff;
+  if (newSign !== oldSign){
+    state.settings.phaseStart = todayStr();
+    state.settings.phaseSign = newSign;
+    toast(newSign==="-" ? "Definitionsphase gestartet" : "Massephase gestartet");
+  }
+  save(); renderToday();
+}
 $("#offSign").addEventListener("click", () => {
   const b = $("#offSign"); const neg = b.dataset.sign === "-";
   b.dataset.sign = neg ? "+" : "-"; b.textContent = neg ? "＋" : "−";
-  state.settings.offset = readOffset(); save(); renderToday();
+  applyOffsetChange();
 });
-$("#setOffset").addEventListener("change", () => { state.settings.offset = readOffset(); save(); renderToday(); });
+$("#setOffset").addEventListener("change", applyOffsetChange);
 $("#setBase").addEventListener("change", () => { state.settings.base = Number($("#setBase").value)||0; save(); renderToday(); });
 $("#setP").addEventListener("change", () => { state.settings.p = Number($("#setP").value)||0; save(); renderToday(); });
 $("#setFmin").addEventListener("change", () => { state.settings.fmin = Number($("#setFmin").value)||0; save(); renderToday(); });
 $("#setFmax").addEventListener("change", () => { state.settings.fmax = Number($("#setFmax").value)||0; save(); renderToday(); });
 
-// Aktivkalorien-Feld auf „Heute"
+// Aktivkalorien-Feld auf „Heute" → schreibt in den offenen Tag
 $("#todayActivity").addEventListener("change", () => {
-  state.settings.activity = Number($("#todayActivity").value)||0; save(); renderToday();
+  getDay(state.openDay).activity = Number($("#todayActivity").value)||0; save(); renderToday();
 });
 
 // +/- Stepper (Grundumsatz, Makroziele)
@@ -828,7 +1007,7 @@ $("#importBtn").addEventListener("click", ()=> $("#importFile").click());
 $("#importFile").addEventListener("change", e => {
   const file = e.target.files[0]; if(!file) return;
   const r = new FileReader();
-  r.onload = () => { try { const data = JSON.parse(r.result); state = Object.assign(defaultState(), data); migrateState(); ensureOpenDay(); renderAll(); toast("Backup geladen"); }
+  r.onload = () => { try { const data = JSON.parse(r.result); state = Object.assign(defaultState(), data); migrateState(); ensureOpenDay(); renderAll(); renderHistory(); toast("Backup geladen"); }
     catch(err){ toast("Datei ungültig"); } };
   r.readAsText(file); e.target.value="";
 });
@@ -864,7 +1043,7 @@ $("#closeDayBtn").addEventListener("click", () => {
   if (nt === state.openDay) { toast("Heute läuft noch"); return; }
   if (confirm(dateLabel(state.openDay) + " abschließen und " + dateLabel(nt) + " starten?")) {
     const closing = state.days[state.openDay];
-    if (closing) closing.goalSnapshot = liveGoal();   // Ziel des scheidenden Tages festhalten
+    if (closing) closing.goalSnapshot = baseGoal(state.openDay);   // Grundziel des scheidenden Tages einfrieren
     state.openDay = nt; save(); renderToday(); renderHistory(); toast("Tag abgeschlossen");
   }
 });
@@ -885,6 +1064,7 @@ function renderDayReview(){
   const dstr = reviewDay; const day = state.days[dstr];
   const t = dayTotals(dstr); const g = dayGoalKcal(dstr);
   const diff = Math.round(t.kcal - g); const sign = diff>0?"+":"";
+  $("#dayActivity").value = dayActivity(dstr) || "";
   $("#dayTotal").textContent = Math.round(t.kcal) + " / " + g + " kcal (" + sign + diff + ")";
   const el = $("#dayEntries");
   if (!day || !day.entries.length){ el.innerHTML = '<div class="empty">Keine Einträge an diesem Tag.</div>'; return; }
@@ -898,6 +1078,19 @@ function renderDayReview(){
       <button class="e-del" data-day-del="${e.id}">×</button>
     </div>`).join("");
 }
+// Aktivkalorien eines vergangenen Tages nachtragen/korrigieren → Ziel des Tages mitziehen
+$("#dayActivity").addEventListener("change", () => {
+  if (!reviewDay) return;
+  const day = getDay(reviewDay);
+  const old = day.activity || 0;
+  const neu = Number($("#dayActivity").value)||0;
+  day.activity = neu;
+  if (reviewDay !== state.openDay && day.goalSnapshot != null){
+    day.goalSnapshot += (neu - old);   // eingefrorenes Ziel um die Differenz verschieben
+  }
+  save(); renderDayReview(); renderHistory();
+  if (reviewDay === state.openDay) renderToday();
+});
 $("#dayAdd").addEventListener("click", () => { if (reviewDay) openLog(reviewDay); });
 
 $("#openBackup").addEventListener("click", () => openSheet("#backupSheet","#backupBg"));
@@ -929,7 +1122,7 @@ document.body.addEventListener("click", e => {
   const t = e.target;
   const dOpen = t.closest("[data-day-open]"); if (dOpen){ openDayReview(dOpen.getAttribute("data-day-open")); return; }
   const dDel = t.getAttribute("data-day-del");
-  if (dDel){ const day = state.days[reviewDay]; if (day){ day.entries = day.entries.filter(x=>x.id!==dDel); save(); if (reviewDay===todayStr()) renderToday(); renderHistory(); renderDayReview(); } return; }
+  if (dDel){ const day = state.days[reviewDay]; if (day){ day.entries = day.entries.filter(x=>x.id!==dDel); save(); if (reviewDay===state.openDay) renderToday(); renderHistory(); renderDayReview(); } return; }
   const del = t.getAttribute("data-del");
   if (del){ const day = state.days[state.openDay]; if(day){ day.entries = day.entries.filter(x=>x.id!==del); save(); renderToday(); } return; }
   const lp = t.closest("[data-log-por]"); if (lp){ addPortionEntry(lp.getAttribute("data-log-por")); return; }
@@ -945,17 +1138,35 @@ function esc(s){ return String(s).replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;"
 
 function migrateState(){
   const s = state.settings;
+  // alt: Phasen-Umschalter + zwei Offsets → ein signierter Offset
   if (s.offset === undefined){
     s.offset = (s.phase === "defi") ? (s.offDefi != null ? s.offDefi : -500) : (s.offMasse != null ? s.offMasse : 300);
   }
   delete s.phase; delete s.offMasse; delete s.offDefi;
+
+  // alt: globale Aktivkalorien → auf den offenen Tag übertragen
+  if (s.activity != null){
+    const od = state.openDay || todayStr();
+    if (!state.days[od]) state.days[od] = { entries: [], goalSnapshot: null, activity: 0 };
+    if (!state.days[od].activity) state.days[od].activity = s.activity;
+    delete s.activity;
+  }
+  // fehlendes activity-Feld je Tag auffüllen
+  Object.keys(state.days).forEach(d=>{ if (state.days[d].activity == null) state.days[d].activity = 0; });
+
+  // Phasen-Anker ergänzen, falls nicht vorhanden
+  if (!s.phaseSign) s.phaseSign = (s.offset < 0 ? "-" : "+");
+  if (!s.phaseStart){
+    const withEntries = Object.keys(state.days).filter(d=>state.days[d].entries.length).sort();
+    s.phaseStart = withEntries.length ? withEntries[0] : todayStr();
+  }
 }
 function ensureOpenDay(){
   if (!state.openDay) state.openDay = todayStr();
   const diff = Math.round((new Date(todayStr()) - new Date(state.openDay)) / 86400000);
   if (diff >= 2) {
     const closing = state.days[state.openDay];
-    if (closing && closing.goalSnapshot == null) closing.goalSnapshot = liveGoal();
+    if (closing && closing.goalSnapshot == null) closing.goalSnapshot = baseGoal(state.openDay);
     state.openDay = todayStr();   // vergessenen Tag nach 2 Kalendertagen automatisch abschließen
   }
   save();
