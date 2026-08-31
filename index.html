@@ -50,33 +50,41 @@
 
   /* Dashboard */
   .dash { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px 16px; margin-bottom: 12px; }
-  .kcal-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 4px; }
-  .kcal-big { font-family: var(--num); font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: -.02em; }
-  .kcal-big.over { color: var(--warn); }
-  .kcal-goal { font-family: var(--num); font-size: 15px; color: var(--ink-soft); text-align: right; }
-  .kcal-sub { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; }
-  .kcal-bar { height: 8px; background: var(--bg); border-radius: 5px; overflow: hidden; margin: 12px 0 8px; }
-  .kcal-bar > i { display: block; height: 100%; background: var(--accent); border-radius: 5px; transition: width .25s; }
-  .kcal-adjust { font-size: 12px; color: var(--ink-soft); margin: 0 0 14px; min-height: 15px; }
-  .kcal-adjust b { color: var(--ink); font-weight: 600; }
 
-  .macros { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  .macro .m-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 5px; }
-  .macro .m-label { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); font-weight: 600; }
-  .macro .m-val { font-family: var(--num); font-size: 20px; font-weight: 600; line-height: 1; }
-  .macro .m-goal { font-family: var(--num); font-size: 11px; color: var(--ink-soft); }
-  .macro .m-bar { height: 5px; background: var(--bg); border-radius: 4px; overflow: hidden; }
-  .macro .m-bar > i { display: block; height: 100%; border-radius: 4px; transition: width .25s; }
-  .macro.protein .m-bar > i { background: var(--protein); }
-  .macro.fat .m-bar > i { background: var(--fat); }
-  .macro.carbs .m-bar > i { background: var(--carbs); }
-  .macro.protein .m-val { color: var(--protein); }
-  .macro.fat .m-val { color: var(--fat); }
-  .macro.carbs .m-val { color: var(--carbs); }
-  .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-left: 5px; vertical-align: middle; }
-  .dot.ok { background: var(--ok); }
-  .dot.under { background: var(--fat); }
-  .dot.over { background: var(--warn); }
+  /* kompakte Makros (Ist-Grammzahl + Balken) */
+  .macros-c { display: flex; flex-direction: column; gap: 9px; margin-top: 4px; }
+  .mc-row { display: flex; align-items: center; gap: 10px; }
+  .mc-row .mc-label { font-size: 13px; font-weight: 600; width: 52px; flex-shrink: 0; }
+  .mc-row .mc-bar { flex: 1; height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+  .mc-row .mc-bar > i { display: block; height: 100%; border-radius: 3px; transition: width .25s; }
+  .mc-row .mc-val { font-family: var(--num); font-size: 13px; color: var(--ink-soft); width: 44px; text-align: right; flex-shrink: 0; }
+  .mc-row.protein .mc-label { color: var(--protein); font-size: 14px; } .mc-row.protein .mc-bar { height: 6px; } .mc-row.protein .mc-bar > i { background: var(--protein); }
+  .mc-row.protein .mc-val { font-size: 14px; font-weight: 600; color: var(--protein); }
+  .mc-row.fat .mc-label { color: var(--fat); } .mc-row.fat .mc-bar > i { background: var(--fat); }
+  .mc-row.carbs .mc-label { color: var(--carbs); } .mc-row.carbs .mc-bar > i { background: var(--carbs); }
+  .mc-row.fat.over .mc-bar > i { background: var(--warn); }
+  .mc-row.noref { justify-content: space-between; }
+  .mc-row.noref .mc-label { color: var(--ink-soft); font-weight: 600; }
+  .mc-row.noref .mc-val { color: var(--ink-soft); }
+  /* Kalorien-Leitzeile: größer + fetter */
+  .mc-row.kcal { gap: 12px; margin-bottom: 4px; }
+  .mc-row.kcal .mc-label { font-size: 15px; font-weight: 700; width: 62px; color: var(--ink); }
+  .mc-row.kcal .mc-bar { height: 8px; border-radius: 5px; }
+  .mc-row.kcal .mc-bar > i { background: var(--accent); border-radius: 5px; }
+  .mc-row.kcal .mc-val { font-size: 17px; font-weight: 700; color: var(--ink); width: 58px; }
+  .mc-row.kcal.over .mc-val { color: var(--warn); }
+
+  /* einheitliche Info-Zeilen */
+  .info-list { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 14px; }
+  .info-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .info-row:last-child { border-bottom: none; }
+  .info-row .ir-label { font-size: 14px; }
+  .info-row .ir-val { font-family: var(--num); font-size: 14px; font-weight: 600; }
+  .info-row .ir-val.pos { color: var(--warn); }
+  .info-row .ir-val.neg { color: var(--carbs); }
+  .info-row .ir-edit { display: flex; align-items: center; gap: 7px; }
+  .info-row .ir-edit input { width: 70px; padding: 0; border: none; background: none; text-align: right; font-family: var(--num); font-size: 14px; font-weight: 600; color: var(--ink); }
+  .info-row .ir-edit .ir-pen { color: var(--ink-soft); display: flex; }
 
   .week { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 11px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
   .week .w-label { font-size: 12px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; }
@@ -86,15 +94,40 @@
 
   .section-h { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 600; margin: 0 2px 8px; display:flex; justify-content:space-between; align-items:center;}
 
-  /* Phasen-Zähler */
-  .phase { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; }
-  .phase .ph-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
-  .phase .ph-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
-  .phase .ph-since { font-family: var(--num); font-size: 12px; color: var(--ink-soft); }
-  .phase .ph-big { font-family: var(--num); font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -.01em; }
-  .phase .ph-big.pos { color: var(--warn); }
-  .phase .ph-big.neg { color: var(--carbs); }
-  .phase .ph-meta { font-family: var(--num); font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+  /* Phasen-Zähler (dezent, aufklappbar) */
+  .phase-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
+  .phase-sum { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; cursor: pointer; list-style: none; }
+  .phase-sum::-webkit-details-marker { display: none; }
+  .phase-sum .ps-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+  .phase-sum .ps-right { display: flex; align-items: center; gap: 10px; }
+  .phase-sum .ps-val { font-family: var(--num); font-size: 16px; font-weight: 600; }
+  .phase-sum .ps-val.pos { color: var(--warn); }
+  .phase-sum .ps-val.neg { color: var(--carbs); }
+  .phase-sum .ps-arrow { color: var(--ink-soft); font-size: 18px; transform: rotate(90deg); transition: transform .2s; }
+  .phase-card[open] .ps-arrow { transform: rotate(-90deg); }
+  .phase-detail { padding: 6px 14px 10px; border-top: 1px solid var(--line); }
+  .phase-detail .pd-line { font-family: var(--num); font-size: 12px; color: var(--ink-soft); line-height: 1.6; }
+  .pd-item { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+  .pd-item:last-child { border-bottom: none; }
+  .pd-item .pi-label { font-size: 13px; color: var(--ink); }
+  .pd-item .pi-right { display: flex; align-items: baseline; gap: 10px; }
+  .pd-item .pi-sum { font-family: var(--num); font-size: 15px; font-weight: 600; min-width: 74px; text-align: right; }
+  .pd-item .pi-sum.pos { color: var(--warn); }
+  .pd-item .pi-sum.neg { color: var(--carbs); }
+  .pd-item .pi-avg { font-family: var(--num); font-size: 11px; color: var(--ink-soft); min-width: 60px; text-align: right; }
+  .pd-note { font-family: var(--num); font-size: 11px; color: var(--ink-soft); margin-top: 8px; }
+
+  /* Sicherung (dezent, aufklappbar) */
+  .backup-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 16px; }
+  .backup-sum { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; cursor: pointer; list-style: none; }
+  .backup-sum::-webkit-details-marker { display: none; }
+  .backup-sum .bs-name { font-weight: 600; font-size: 15px; }
+  .backup-sum .bs-right { display: flex; align-items: center; gap: 10px; }
+  .backup-sum .bs-age { font-family: var(--num); font-size: 12px; color: var(--ink-soft); }
+  .backup-sum .bs-age.stale { color: var(--warn); }
+  .backup-sum .bs-arrow { color: var(--ink-soft); font-size: 18px; transform: rotate(90deg); transition: transform .2s; }
+  .backup-card[open] .bs-arrow { transform: rotate(-90deg); }
+  .backup-detail { padding: 10px 14px 12px; border-top: 1px solid var(--line); }
 
   /* Entry list */
   .entry { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
@@ -133,6 +166,27 @@
   .cat-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
   .cat-tab { flex: 1; padding: 9px; text-align: center; border: 1px solid var(--line); background: var(--panel); border-radius: 10px; font-size: 14px; font-weight: 600; color: var(--ink-soft); cursor: pointer; }
   .cat-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  #offMode .cat-tab { line-height: 1.2; }
+  #offMode .sig { display: block; font-size: 15px; margin-top: 2px; }
+
+  /* Ziele: Ergebnis-Kopf + Werteliste */
+  .goal-result { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+  .goal-result .gr-label { font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-soft); font-weight: 600; margin: 0 0 6px; }
+  .goal-result .gr-big { font-family: var(--num); font-size: 34px; font-weight: 600; line-height: 1; letter-spacing: -.02em; }
+  .goal-result .gr-big .u { font-size: 15px; color: var(--ink-soft); margin-left: 6px; font-weight: 600; }
+  .goal-result .gr-break { font-family: var(--num); font-size: 12px; color: var(--ink-soft); margin: 8px 0 0; }
+  .goal-list { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-bottom: 16px; }
+  .goal-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; cursor: pointer; border-bottom: 1px solid var(--line); }
+  .goal-row:last-child { border-bottom: none; }
+  .goal-row:active { background: var(--bg); }
+  .goal-row .gl-name { font-size: 15px; display: flex; align-items: center; }
+  .goal-row .gl-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 8px; }
+  .goal-row .gl-right { display: flex; align-items: center; gap: 8px; }
+  .goal-row .gl-val { font-family: var(--num); font-size: 15px; font-weight: 600; }
+  .goal-row .gl-val.accent { color: var(--protein); }
+  .goal-row .gl-chev { color: var(--ink-soft); font-size: 18px; line-height: 1; }
+  .goal-block { display: none; }
+  .goal-block.on { display: block; }
   .list-item { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
   .list-item .li-main { flex: 1; min-width: 0; }
   .list-item .li-name { font-weight: 600; font-size: 15px; }
@@ -153,11 +207,15 @@
   input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
   .field-kcal { position: relative; }
-  .field-kcal > input { padding-right: 46px; text-align: right; }
+  .field-kcal > input { padding-right: 44px; padding-left: 40px; text-align: right; }
   .field-kcal > .unit { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); font-size: 13px; font-family: var(--num); pointer-events: none; }
-  .stepper { display: grid; grid-template-columns: 48px 1fr 48px; gap: 8px; align-items: stretch; }
-  .step-btn, #offSign { min-height: 46px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 10px; font-size: 22px; font-weight: 600; line-height: 1; cursor: pointer; }
-  .step-btn:active, #offSign:active { background: var(--bg); }
+  .field-kcal > .edit-hint { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); opacity: .5; pointer-events: none; display: flex; }
+  .stepper { display: grid; grid-template-columns: 46px 1fr 46px; align-items: stretch; border: 1px solid var(--line); border-radius: 11px; background: var(--panel); overflow: hidden; }
+  .stepper .step-btn { min-height: 48px; border: none; background: none; color: var(--ink); font-size: 21px; font-weight: 600; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .stepper > .step-btn:first-child { border-right: 1px solid var(--line); }
+  .stepper > .step-btn:last-child { border-left: 1px solid var(--line); }
+  .stepper .step-btn:active { background: var(--bg); }
+  .stepper .field-kcal > input, .stepper > input { border: none; border-radius: 0; background: none; min-height: 48px; }
   .grid4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
   .grid4 label.f { margin-top: 0; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -207,46 +265,44 @@
 <div class="screen active" id="screen-heute">
   <div class="wrap">
     <div id="openDayBanner" style="display:none;background:var(--panel);border:1px solid var(--fat);border-radius:12px;padding:11px 14px;margin-bottom:12px">
-      <div class="hint" id="openDayText" style="margin:0 0 8px;color:var(--fat)"></div>
       <button class="btn" id="closeDayBtn" style="margin:0">Tag abschließen &amp; neuen starten</button>
     </div>
     <div class="dash">
-      <div class="kcal-row">
-        <div>
-          <div class="kcal-big num" id="kcalNow">0</div>
-          <div class="kcal-sub">kcal heute</div>
+      <div class="macros-c">
+        <div class="mc-row kcal" id="kcalRow">
+          <span class="mc-label">Kalorien</span>
+          <div class="mc-bar"><i id="kcalBar" style="width:0%"></i></div>
+          <span class="mc-val num" id="kcalNow">0</span>
         </div>
-        <div class="kcal-goal">Ziel<br><span id="kcalGoal">–</span></div>
-      </div>
-      <div class="kcal-bar"><i id="kcalBar" style="width:0%"></i></div>
-      <div class="kcal-adjust" id="kcalAdjust"></div>
-      <div class="macros">
-        <div class="macro protein">
-          <div class="m-top"><span class="m-label">Eiweiß</span><span class="m-goal" id="pGoal"></span></div>
-          <div class="m-val num"><span id="pNow">0</span><span style="font-size:12px;color:var(--ink-soft)">g</span><span class="dot" id="pDot"></span></div>
-          <div class="m-bar"><i id="pBar" style="width:0%"></i></div>
+        <div class="mc-row protein">
+          <span class="mc-label">Eiweiß</span>
+          <div class="mc-bar"><i id="pBar" style="width:0%"></i></div>
+          <span class="mc-val"><span id="pNow">0</span> g</span>
         </div>
-        <div class="macro fat">
-          <div class="m-top"><span class="m-label">Fett</span><span class="m-goal" id="fGoal"></span></div>
-          <div class="m-val num"><span id="fNow">0</span><span style="font-size:12px;color:var(--ink-soft)">g</span><span class="dot" id="fDot"></span></div>
-          <div class="m-bar"><i id="fBar" style="width:0%"></i></div>
+        <div class="mc-row fat" id="fatRow">
+          <span class="mc-label">Fett</span>
+          <div class="mc-bar"><i id="fBar" style="width:0%"></i></div>
+          <span class="mc-val"><span id="fNow">0</span> g</span>
         </div>
-        <div class="macro carbs">
-          <div class="m-top"><span class="m-label">KH</span><span class="m-goal" id="cGoal"></span></div>
-          <div class="m-val num"><span id="cNow">0</span><span style="font-size:12px;color:var(--ink-soft)">g</span></div>
-          <div class="m-bar"><i id="cBar" style="width:0%"></i></div>
+        <div class="mc-row noref">
+          <span class="mc-label">KH</span>
+          <span class="mc-val"><span id="cNow">0</span> g</span>
         </div>
       </div>
     </div>
 
-    <div class="week" style="margin-bottom:8px">
-      <span class="w-label">Aktivkalorien heute</span>
-      <input class="num-in" id="todayActivity" type="number" inputmode="numeric" placeholder="0" style="width:120px;padding:8px 10px;text-align:right">
-    </div>
-
-    <div class="week">
-      <span class="w-label">Konto (7 Tage)</span>
-      <span class="w-val num" id="weekSaldo">–</span>
+    <div class="info-list">
+      <div class="info-row">
+        <span class="ir-label">Differenz heute</span>
+        <span class="ir-val num" id="diffToday">–</span>
+      </div>
+      <div class="info-row">
+        <span class="ir-label">Aktivkalorien</span>
+        <span class="ir-edit">
+          <input class="num-in" id="todayActivity" type="number" inputmode="numeric" placeholder="0">
+          <span class="ir-pen"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+        </span>
+      </div>
     </div>
 
     <div class="section-h"><span>Heute gegessen</span></div>
@@ -270,63 +326,63 @@
 <!-- ============ ZIELE ============ -->
 <div class="screen" id="screen-ziele">
   <div class="wrap">
-    <label class="f">Grundumsatz</label>
-    <div class="stepper">
-      <button class="step-btn" data-step="-25" data-target="setBase">−</button>
-      <div class="field-kcal">
-        <input class="num-in" id="setBase" type="number" inputmode="numeric">
-        <span class="unit">kcal</span>
-      </div>
-      <button class="step-btn" data-step="25" data-target="setBase">+</button>
+    <div class="goal-result">
+      <p class="gr-label">Kalorienziel</p>
+      <div class="gr-big num"><span id="zielBig">–</span><span class="u">kcal</span></div>
+      <p class="gr-break" id="zielBreak"></p>
     </div>
-    <label class="f" style="margin-top:14px">Über-/Unterschuss</label>
-    <div class="stepper">
-      <button id="offSign" data-sign="+">＋</button>
-      <div class="field-kcal">
-        <input class="num-in" id="setOffset" type="number" inputmode="numeric" placeholder="0">
-        <span class="unit">kcal</span>
-      </div>
-    </div>
-    <p class="hint">Vorzeichen wechseln (＋ ↔ −) startet eine neue Phase: der Phasen-Zähler im Verlauf beginnt bei 0.</p>
 
-    <details style="margin-top:18px">
-      <summary style="font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);font-weight:600;cursor:pointer;padding:6px 2px">Makroziele</summary>
-      <div style="margin-top:8px">
-        <label class="f">Eiweiß Ziel (g)</label>
-        <div class="stepper">
-          <button class="step-btn" data-step="-5" data-target="setP">−</button>
-          <input class="num-in" id="setP" type="number" inputmode="numeric" style="text-align:center">
-          <button class="step-btn" data-step="5" data-target="setP">+</button>
-        </div>
-        <label class="f" style="margin-top:12px">Fett min (g)</label>
-        <div class="stepper">
-          <button class="step-btn" data-step="-5" data-target="setFmin">−</button>
-          <input class="num-in" id="setFmin" type="number" inputmode="numeric" style="text-align:center">
-          <button class="step-btn" data-step="5" data-target="setFmin">+</button>
-        </div>
-        <label class="f" style="margin-top:12px">Fett max (g)</label>
-        <div class="stepper">
-          <button class="step-btn" data-step="-5" data-target="setFmax">−</button>
-          <input class="num-in" id="setFmax" type="number" inputmode="numeric" style="text-align:center">
-          <button class="step-btn" data-step="5" data-target="setFmax">+</button>
-        </div>
+    <div class="section-h"><span>Kalorien</span></div>
+    <div class="goal-list">
+      <div class="goal-row" data-goal="base">
+        <span class="gl-name">Grundumsatz</span>
+        <span class="gl-right"><span class="gl-val num" id="valBase">–</span><span class="gl-chev">›</span></span>
       </div>
-    </details>
+      <div class="goal-row" data-goal="offset">
+        <span class="gl-name">Über-/Unterschuss</span>
+        <span class="gl-right"><span class="gl-val num" id="valOffset">–</span><span class="gl-chev">›</span></span>
+      </div>
+    </div>
+
+    <div class="section-h"><span>Makros</span></div>
+    <div class="goal-list">
+      <div class="goal-row" data-goal="p">
+        <span class="gl-name"><span class="gl-dot" style="background:var(--protein)"></span>Eiweiß</span>
+        <span class="gl-right"><span class="gl-val num" id="valP">–</span><span class="gl-chev">›</span></span>
+      </div>
+      <div class="goal-row" data-goal="fett">
+        <span class="gl-name"><span class="gl-dot" style="background:var(--fat)"></span>Fett</span>
+        <span class="gl-right"><span class="gl-val num" id="valFett">–</span><span class="gl-chev">›</span></span>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ============ VERLAUF ============ -->
 <div class="screen" id="screen-verlauf">
   <div class="wrap">
-    <div class="section-h"><span id="phaseHead">Phase</span></div>
-    <div class="phase" id="phaseBox"></div>
+    <details class="phase-card" id="phaseWrap">
+      <summary class="phase-sum">
+        <span class="ps-name" id="phaseName">Phase</span>
+        <span class="ps-right"><span class="ps-val num" id="phaseVal">–</span><span class="ps-arrow">›</span></span>
+      </summary>
+      <div class="phase-detail" id="phaseDetail"></div>
+    </details>
 
-    <div class="section-h"><span>Daten</span></div>
-    <div class="list-item" id="openBackup" style="cursor:pointer;margin-bottom:16px">
-      <div class="li-main"><div class="li-name">Sicherung</div>
-      <div class="li-meta">Backup exportieren oder laden</div></div>
-      <div class="li-btn">›</div>
-    </div>
+    <details class="backup-card" id="backupWrap">
+      <summary class="backup-sum">
+        <span class="bs-name">Sicherung</span>
+        <span class="bs-right"><span class="bs-age num" id="backupAge">–</span><span class="bs-arrow">›</span></span>
+      </summary>
+      <div class="backup-detail">
+        <div class="btn-row">
+          <button class="btn ghost" id="exportBtn">Exportieren</button>
+          <button class="btn ghost" id="importBtn">Laden</button>
+        </div>
+        <input type="file" id="importFile" accept="application/json" style="display:none">
+        <p class="hint">Ablage: Drive → Ordner „makro-daten".</p>
+      </div>
+    </details>
 
     <div class="section-h"><span>Letzte Tage</span></div>
     <div id="histList"></div>
@@ -428,17 +484,67 @@
   </div>
 </div>
 
-<!-- ============ SHEET: Sicherung ============ -->
-<div class="sheet-bg" id="backupBg"></div>
-<div class="sheet" id="backupSheet">
-  <div class="sheet-head"><h2>Sicherung</h2><button class="x" data-close-backup>×</button></div>
+<!-- ============ SHEET: Ziel bearbeiten ============ -->
+<div class="sheet-bg" id="goalBg"></div>
+<div class="sheet" id="goalSheet">
+  <div class="sheet-head"><h2 id="goalTitle">Bearbeiten</h2><button class="x" data-close-goal>×</button></div>
   <div class="sheet-body">
-    <div class="btn-row">
-      <button class="btn ghost" id="exportBtn">Exportieren</button>
-      <button class="btn ghost" id="importBtn">Laden</button>
+
+    <div class="goal-block" data-block="base">
+      <label class="f">Grundumsatz</label>
+      <div class="stepper">
+        <button class="step-btn" data-step="-25" data-target="setBase"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="field-kcal">
+          <span class="edit-hint"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          <input class="num-in" id="setBase" type="number" inputmode="numeric">
+          <span class="unit">kcal</span>
+        </div>
+        <button class="step-btn" data-step="25" data-target="setBase"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+      <p class="hint">Phasenneutraler Ruhe-/Erhaltungswert. Nur nach der Waage justieren.</p>
     </div>
-    <input type="file" id="importFile" accept="application/json" style="display:none">
-    <p class="hint">Sichert deinen kompletten Stand (Zutaten, Portionen, alle Tage, Ziele) in eine Datei – leg sie z. B. in iCloud/Dateien ab oder schick sie dir per Mail. „Laden" spielt so eine Datei wieder ein und ersetzt den aktuellen Stand. Sichere alle paar Tage.</p>
+
+    <div class="goal-block" data-block="offset">
+      <label class="f">Über-/Unterschuss</label>
+      <div class="cat-tabs" id="offMode" style="margin-bottom:8px">
+        <div class="cat-tab active" data-sign="+">Überschuss<span class="sig">＋</span></div>
+        <div class="cat-tab" data-sign="-">Unterschuss<span class="sig">−</span></div>
+      </div>
+      <div class="stepper">
+        <button class="step-btn" data-step="-25" data-target="setOffset"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="field-kcal">
+          <span class="edit-hint"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></span>
+          <input class="num-in" id="setOffset" type="number" inputmode="numeric" placeholder="0">
+          <span class="unit">kcal</span>
+        </div>
+        <button class="step-btn" data-step="25" data-target="setOffset"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="goal-block" data-block="p">
+      <label class="f">Eiweiß-Ziel (g)</label>
+      <div class="stepper">
+        <button class="step-btn" data-step="-5" data-target="setP"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <input class="num-in" id="setP" type="number" inputmode="numeric" style="text-align:center">
+        <button class="step-btn" data-step="5" data-target="setP"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="goal-block" data-block="fett">
+      <label class="f">Fett min (g)</label>
+      <div class="stepper">
+        <button class="step-btn" data-step="-5" data-target="setFmin"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <input class="num-in" id="setFmin" type="number" inputmode="numeric" style="text-align:center">
+        <button class="step-btn" data-step="5" data-target="setFmin"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+      <label class="f" style="margin-top:12px">Fett max (g)</label>
+      <div class="stepper">
+        <button class="step-btn" data-step="-5" data-target="setFmax"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <input class="num-in" id="setFmax" type="number" inputmode="numeric" style="text-align:center">
+        <button class="step-btn" data-step="5" data-target="setFmax"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -565,35 +671,39 @@ function dayGoalKcal(d) {
   if (day && day.goalSnapshot != null) return day.goalSnapshot;
   return baseGoal(d);
 }
-// rollierender 7-Tage-Saldo (abgeschlossene Tage mit Einträgen), Basis für den Übertrag
-function rollingSaldo(){
-  const today = todayStr();
-  const cut = new Date(today); cut.setDate(cut.getDate()-6);
-  const cutStr = cut.toISOString().slice(0,10);
-  let sum = 0;
-  Object.keys(state.days).forEach(d=>{
-    const day = state.days[d];
-    if (!day.entries.length) return;
-    if (d === state.openDay) return;         // offener Tag zählt noch nicht
-    if (d < cutStr || d > today) return;      // außerhalb 7-Tage-Fenster
-    sum += dayTotals(d).kcal - dayGoalKcal(d);
-  });
-  return Math.round(sum);
+// Übertrag: nur die Differenz des zuletzt abgeschlossenen Tages, gedeckelt auf ±CARRY_CAP.
+// Große Ausreißer werden nicht über mehrere Tage abgearbeitet – der Rest bleibt in der Phasen-Bilanz.
+const CARRY_CAP = 500;
+function prevDayCarry(){
+  const open = state.openDay || todayStr();
+  const days = Object.keys(state.days).filter(d => d < open && state.days[d].entries.length).sort();
+  if (!days.length) return 0;
+  const prev = days[days.length-1];
+  const diff = Math.round(dayTotals(prev).kcal - dayGoalKcal(prev));
+  return Math.max(-CARRY_CAP, Math.min(CARRY_CAP, diff));
 }
-// effektives Tagesziel heute = Grundziel − halber Saldo (Übertrag über 2 Tage)
-function effectiveGoal(){ return Math.round(baseGoal(state.openDay) - rollingSaldo()/2); }
-// Phasen-Zähler: kumulierte Bilanz seit Phasenbeginn
-function phaseCounter(){
-  const start = state.settings.phaseStart || todayStr();
+// effektives Tagesziel heute = Grundziel − gedeckelter Vortags-Übertrag
+function effectiveGoal(){ return Math.round(baseGoal(state.openDay) - prevDayCarry()); }
+// Bilanz über Zeitraum: Summe(gegessen − Ziel) über abgeschlossene Tage mit Einträgen ab fromStr
+function balanceOver(fromStr){
+  const today = todayStr();
   let sum=0, days=0;
   Object.keys(state.days).forEach(d=>{
     const day = state.days[d];
     if (!day.entries.length) return;
-    if (d < start) return;
+    if (d === state.openDay) return;          // offener (unvollständiger) Tag zählt nicht
+    if (d < fromStr || d > today) return;
     sum += dayTotals(d).kcal - dayGoalKcal(d);
     days++;
   });
-  return { sum: Math.round(sum), days, start };
+  return { sum: Math.round(sum), days };
+}
+function daysAgoStr(n){ const dt=new Date(todayStr()); dt.setDate(dt.getDate()-(n-1)); return dt.toISOString().slice(0,10); }
+// Phasen-Zähler: kumulierte Bilanz seit Phasenbeginn
+function phaseCounter(){
+  const start = state.settings.phaseStart || todayStr();
+  const b = balanceOver(start);
+  return { sum: b.sum, days: b.days, start };
 }
 
 // ---- Nährwert-Berechnung ----
@@ -616,57 +726,34 @@ function portionTotals(portion) {
 function renderToday() {
   if (!state.openDay) state.openDay = todayStr();
   const d = state.openDay;
-  $("#todayLabel").textContent = dateLabel(d) + (d !== todayStr() ? " · offen" : "");
+  const heuteActive = $("#screen-heute").classList.contains("active");
+  $("#todayLabel").textContent = heuteActive ? (dateLabel(d) + (d !== todayStr() ? " · offen" : "")) : "";
   const banner = $("#openDayBanner");
-  if (d !== todayStr()) {
-    banner.style.display = "block";
-    $("#openDayText").textContent = "Offener Tag ist " + dateLabel(d) + ". Schließe ihn ab, um " + dateLabel(todayStr()) + " zu starten.";
-  } else { banner.style.display = "none"; }
+  banner.style.display = (d !== todayStr()) ? "block" : "none";
   const tot = dayTotals(d);
   const grund = baseGoal(d);
-  const saldo = rollingSaldo();
-  const goal = Math.round(grund - saldo/2);   // effektives Tagesziel mit Übertrag
+  const carry = prevDayCarry();
+  const goal = Math.round(grund - carry);   // effektives Tagesziel mit Vortags-Übertrag
   const s = state.settings;
 
   const over = tot.kcal - grund > 500;         // Tagesausreißer-Schwelle (Überschuss)
   $("#kcalNow").textContent = Math.round(tot.kcal);
-  $("#kcalNow").classList.toggle("over", over);
-  $("#kcalGoal").textContent = goal;
+  $("#kcalRow").classList.toggle("over", over);
   $("#kcalBar").style.width = Math.min(100, goal>0 ? tot.kcal/goal*100 : 0) + "%";
 
-  // Konto / Anpassungs-Hinweis
-  const adj = $("#kcalAdjust");
-  if (Math.abs(saldo) >= 50) {
-    const shift = Math.round(saldo/2);
-    adj.innerHTML = "Konto <b>" + SIGNED(saldo) + "</b> · Grundziel " + grund +
-      " · heute <b>" + SIGNED(-shift) + "</b> angepasst";
-  } else {
-    adj.innerHTML = "Konto ausgeglichen · Ziel = Grundumsatz + Aktiv + Über-/Unterschuss";
-  }
-
-  // Eiweiß
+  // Makros: nur Ist-Grammzahl, Balken trägt die Referenz
   $("#pNow").textContent = round(tot.p);
-  $("#pGoal").textContent = "/ " + s.p;
   $("#pBar").style.width = Math.min(100, s.p? tot.p/s.p*100 : 0) + "%";
-  setDot("#pDot", tot.p >= s.p ? "ok" : "under");
-
-  // Fett (Korridor)
   $("#fNow").textContent = round(tot.f);
-  $("#fGoal").textContent = s.fmin + "–" + s.fmax;
   $("#fBar").style.width = Math.min(100, s.fmax? tot.f/s.fmax*100 : 0) + "%";
-  setDot("#fDot", tot.f < s.fmin ? "under" : (tot.f > s.fmax ? "over" : "ok"));
-
-  // KH (Rest der Kalorien, gegen effektives Ziel)
-  const restKcal = goal - (s.p*4) - (((s.fmin+s.fmax)/2)*9);
-  const cGoal = Math.max(0, round(restKcal/4));
+  $("#fatRow").classList.toggle("over", tot.f > s.fmax);
   $("#cNow").textContent = round(tot.c);
-  $("#cGoal").textContent = "≈ " + cGoal;
-  $("#cBar").style.width = Math.min(100, cGoal? tot.c/cGoal*100 : 0) + "%";
 
-  // Konto-Zeile
-  const ws = $("#weekSaldo");
-  ws.textContent = saldo===0 ? "±0 kcal" : SIGNED(saldo) + " kcal";
-  ws.className = "w-val num" + (saldo>0?" pos":(saldo<0?" neg":""));
+  // Differenz heute (gegen das angezeigte Tagesziel)
+  const diff = Math.round(tot.kcal - goal);
+  const dt = $("#diffToday");
+  dt.textContent = SIGNED(diff);
+  dt.className = "ir-val num" + (diff>0 ? " pos" : "");
 
   // Aktivkalorien-Feld (offener Tag)
   $("#todayActivity").value = dayActivity(d) || "";
@@ -744,21 +831,36 @@ function aggregate(keyFn){
 }
 function diffClass(diff){ return diff>0 ? "pos" : "neg"; }
 
+function renderBackupAge(){
+  const el = $("#backupAge"); if (!el) return;
+  const lb = state.settings.lastBackup;
+  if (!lb){ el.textContent = "nie gesichert"; el.classList.add("stale"); return; }
+  const days = Math.round((new Date(todayStr()) - new Date(lb)) / 86400000);
+  el.textContent = days<=0 ? "heute" : ("vor " + days + (days===1?" Tag":" Tagen"));
+  el.classList.toggle("stale", days > 7);
+}
+
 function renderHistory() {
   // ----- Phasen-Zähler -----
   const pc = phaseCounter();
   const isDefi = state.settings.offset < 0;
-  $("#phaseHead").textContent = isDefi ? "Phase · Definition" : "Phase · Masse";
-  const box = $("#phaseBox");
-  const avg = pc.days ? Math.round(pc.sum / pc.days) : 0;
-  const bigCls = pc.sum>0 ? "pos" : (pc.sum<0 ? "neg" : "");
-  box.innerHTML =
-    '<div class="ph-head">' +
-      '<span class="ph-name">' + (isDefi ? "Definition" : "Masse") + '</span>' +
-      '<span class="ph-since">seit ' + dateLabel(pc.start) + '</span>' +
-    '</div>' +
-    '<div class="ph-big num ' + bigCls + '">' + SIGNED(pc.sum) + ' kcal</div>' +
-    '<div class="ph-meta">' + pc.days + ' Tage · Ø ' + SIGNED(avg) + '/Tag · kumulierte Bilanz gegen Ziel</div>';
+  $("#phaseName").textContent = isDefi ? "Definition" : "Masse";
+  const pv = $("#phaseVal");
+  pv.textContent = SIGNED(pc.sum) + " kcal";
+  pv.className = "ps-val num" + (pc.sum>0 ? " pos" : (pc.sum<0 ? " neg" : ""));
+  const rows = [
+    ["7 Tage", balanceOver(daysAgoStr(7))],
+    ["30 Tage", balanceOver(daysAgoStr(30))],
+    ["seit " + dateLabel(pc.start), { sum: pc.sum, days: pc.days }]
+  ];
+  $("#phaseDetail").innerHTML = rows.map(([label,b]) => {
+    const av = b.days ? Math.round(b.sum/b.days) : 0;
+    const cls = b.sum>0 ? "pos" : (b.sum<0 ? "neg" : "");
+    return '<div class="pd-item"><span class="pi-label">' + label + '</span>' +
+      '<span class="pi-right"><span class="pi-sum num ' + cls + '">' + SIGNED(b.sum) + '</span>' +
+      '<span class="pi-avg">Ø ' + SIGNED(av) + '/T · ' + b.days + ' T</span></span></div>';
+  }).join("") + '<div class="pd-note">kumulierte Bilanz gegen Ziel · rollierende Fenster</div>';
+  renderBackupAge();
 
   // ----- Tagesliste (gestaffelt: 2 detailliert, dann kompakt bis 14) -----
   const list = $("#histList");
@@ -767,26 +869,15 @@ function renderHistory() {
     list.innerHTML = '<div class="empty">Noch keine Tage erfasst.</div>';
   } else {
     const recent = days.slice(0, 14);
-    list.innerHTML = recent.map((d,idx) => {
+    list.innerHTML = recent.map(d => {
       const t = dayTotals(d); const g = dayGoalKcal(d);
       const diff = Math.round(t.kcal - g);
       const big = Math.abs(diff) > 500;
       const dd = new Date(d).toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit"});
-      if (idx < 2) {
-        // detailliert
-        return `<div class="dayrow" data-day-open="${d}">
-          <div class="dr-main"><div class="dr-name">${dd}</div>
-          <div class="dr-meta">${Math.round(t.kcal)} / ${g} · E ${round(t.p)} · F ${round(t.f)} · KH ${round(t.c)}</div></div>
-          <div class="dr-diff ${diffClass(diff)} ${big?"big":""}">${SIGNED(diff)}</div>
-        </div>`;
-      }
-      // kompakt: nur Abweichung
+      // reduziert: nur Datum + Abweichung. Details (Summe/Ziel, Aktiv, Einträge) beim Antippen im Sheet.
       return `<div class="dayrow" data-day-open="${d}">
         <div class="dr-main"><div class="dr-name">${dd}</div></div>
-        <div style="text-align:right">
-          <div class="dr-diff ${diffClass(diff)} ${big?"big":""}">${SIGNED(diff)}</div>
-          <div class="dr-kcal">${Math.round(t.kcal)} kcal</div>
-        </div>
+        <div class="dr-diff ${diffClass(diff)} ${big?"big":""}">${SIGNED(diff)}</div>
       </div>`;
     }).join("");
   }
@@ -950,16 +1041,17 @@ function fillSettings() {
   const s = state.settings;
   $("#setBase").value = s.base;
   const off = s.offset || 0;
-  $("#offSign").dataset.sign = off < 0 ? "-" : "+";
-  $("#offSign").textContent = off < 0 ? "−" : "＋";
+  document.querySelectorAll("#offMode .cat-tab").forEach(t => t.classList.toggle("active", t.dataset.sign === (off < 0 ? "-" : "+")));
   $("#setOffset").value = Math.abs(off);
   $("#setP").value = s.p; $("#setFmin").value = s.fmin; $("#setFmax").value = s.fmax;
 }
 function readOffset(){
   const mag = Math.abs(Number($("#setOffset").value)||0);
-  return ($("#offSign").dataset.sign === "-" ? -1 : 1) * mag;
+  const active = document.querySelector("#offMode .cat-tab.active");
+  const neg = active && active.dataset.sign === "-";
+  return (neg ? -1 : 1) * mag;
 }
-// Über-/Unterschuss ändern; Vorzeichenwechsel = neue Phase
+// Über-/Unterschuss ändern; Umschalten Über-/Unterschuss = neue Phase
 function applyOffsetChange(){
   const newOff = readOffset();
   const oldSign = state.settings.phaseSign || (state.settings.offset < 0 ? "-" : "+");
@@ -972,16 +1064,40 @@ function applyOffsetChange(){
   }
   save(); renderToday();
 }
-$("#offSign").addEventListener("click", () => {
-  const b = $("#offSign"); const neg = b.dataset.sign === "-";
-  b.dataset.sign = neg ? "+" : "-"; b.textContent = neg ? "＋" : "−";
-  applyOffsetChange();
-});
-$("#setOffset").addEventListener("change", applyOffsetChange);
-$("#setBase").addEventListener("change", () => { state.settings.base = Number($("#setBase").value)||0; save(); renderToday(); });
-$("#setP").addEventListener("change", () => { state.settings.p = Number($("#setP").value)||0; save(); renderToday(); });
-$("#setFmin").addEventListener("change", () => { state.settings.fmin = Number($("#setFmin").value)||0; save(); renderToday(); });
-$("#setFmax").addEventListener("change", () => { state.settings.fmax = Number($("#setFmax").value)||0; save(); renderToday(); });
+document.querySelectorAll("#offMode .cat-tab").forEach(t => t.addEventListener("click", () => {
+  document.querySelectorAll("#offMode .cat-tab").forEach(x => x.classList.remove("active"));
+  t.classList.add("active");
+  applyOffsetChange(); renderZiele();
+}));
+$("#setOffset").addEventListener("change", () => { applyOffsetChange(); renderZiele(); });
+$("#setBase").addEventListener("change", () => { state.settings.base = Number($("#setBase").value)||0; save(); renderToday(); renderZiele(); });
+$("#setP").addEventListener("change", () => { state.settings.p = Number($("#setP").value)||0; save(); renderToday(); renderZiele(); });
+$("#setFmin").addEventListener("change", () => { state.settings.fmin = Number($("#setFmin").value)||0; save(); renderToday(); renderZiele(); });
+$("#setFmax").addEventListener("change", () => { state.settings.fmax = Number($("#setFmax").value)||0; save(); renderToday(); renderZiele(); });
+
+// Ziele-Screen: Ergebnis + Werteliste rendern
+function renderZiele(){
+  const s = state.settings;
+  const off = s.offset || 0;
+  const ziel = s.base + off;
+  $("#zielBig").textContent = ziel.toLocaleString("de-DE");
+  $("#zielBreak").textContent = s.base.toLocaleString("de-DE") + " Grundumsatz " + (off<0?"−":"+") + " " + Math.abs(off) + " " + (off<0?"Unterschuss":"Überschuss");
+  $("#valBase").textContent = s.base.toLocaleString("de-DE");
+  const vo = $("#valOffset");
+  vo.textContent = (off>0?"+":(off<0?"−":"±")) + Math.abs(off);
+  vo.className = "gl-val num" + (off!==0 ? " accent" : "");
+  $("#valP").textContent = s.p + " g";
+  $("#valFett").textContent = s.fmin + "–" + s.fmax + " g";
+}
+
+// Editor-Sheet für einen Zielwert öffnen
+const goalTitles = { base:"Grundumsatz", offset:"Über-/Unterschuss", p:"Eiweiß-Ziel", fett:"Fett-Korridor" };
+function openGoalEditor(which){
+  fillSettings();
+  document.querySelectorAll(".goal-block").forEach(b => b.classList.toggle("on", b.dataset.block === which));
+  $("#goalTitle").textContent = goalTitles[which] || "Bearbeiten";
+  openSheet("#goalSheet","#goalBg");
+}
 
 // Aktivkalorien-Feld auf „Heute" → schreibt in den offenen Tag
 $("#todayActivity").addEventListener("change", () => {
@@ -1001,14 +1117,20 @@ $("#exportBtn").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(state,null,2)], {type:"application/json"});
   const url = URL.createObjectURL(blob); const a = document.createElement("a");
   a.href = url; a.download = "makro-backup-" + todayStr() + ".json"; a.click();
-  URL.revokeObjectURL(url); toast("Backup exportiert");
+  URL.revokeObjectURL(url);
+  state.settings.lastBackup = todayStr(); save(); renderBackupAge(); toast("Backup exportiert");
 });
 $("#importBtn").addEventListener("click", ()=> $("#importFile").click());
 $("#importFile").addEventListener("change", e => {
   const file = e.target.files[0]; if(!file) return;
   const r = new FileReader();
-  r.onload = () => { try { const data = JSON.parse(r.result); state = Object.assign(defaultState(), data); migrateState(); ensureOpenDay(); renderAll(); renderHistory(); toast("Backup geladen"); }
-    catch(err){ toast("Datei ungültig"); } };
+  r.onload = () => {
+    let data;
+    try { data = JSON.parse(r.result); }
+    catch(err){ toast("Datei ungültig"); return; }
+    if (!confirm("Aktuellen Stand vollständig mit dieser Datei ersetzen? Das lässt sich nicht rückgängig machen.")) { toast("Abgebrochen"); return; }
+    state = Object.assign(defaultState(), data); migrateState(); ensureOpenDay(); renderAll(); renderHistory(); toast("Backup geladen");
+  };
   r.readAsText(file); e.target.value="";
 });
 
@@ -1023,7 +1145,7 @@ document.querySelectorAll("nav.tabbar button").forEach(b => b.addEventListener("
   document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
   $("#screen-"+sc).classList.add("active");
   if (sc==="katalog") renderCatalog();
-  if (sc==="ziele") fillSettings();
+  if (sc==="ziele") renderZiele();
   if (sc==="verlauf") renderHistory();
   if (sc==="heute") renderToday();
   if (sc!=="heute") $("#todayLabel").textContent = "";
@@ -1093,16 +1215,15 @@ $("#dayActivity").addEventListener("change", () => {
 });
 $("#dayAdd").addEventListener("click", () => { if (reviewDay) openLog(reviewDay); });
 
-$("#openBackup").addEventListener("click", () => openSheet("#backupSheet","#backupBg"));
-document.querySelectorAll("[data-close-backup]").forEach(b=>b.addEventListener("click",()=>closeSheet("#backupSheet","#backupBg")));
-$("#backupBg").addEventListener("click",()=>closeSheet("#backupSheet","#backupBg"));
 document.querySelectorAll("[data-close-ing]").forEach(b=>b.addEventListener("click",()=>closeSheet("#ingSheet","#ingBg")));
 document.querySelectorAll("[data-close-por]").forEach(b=>b.addEventListener("click",()=>closeSheet("#porSheet","#porBg")));
 document.querySelectorAll("[data-close-qty]").forEach(b=>b.addEventListener("click",()=>closeSheet("#qtySheet","#qtyBg")));
+document.querySelectorAll("[data-close-goal]").forEach(b=>b.addEventListener("click",()=>closeSheet("#goalSheet","#goalBg")));
 $("#logBg").addEventListener("click",()=>closeSheet("#logSheet","#logBg"));
 $("#ingBg").addEventListener("click",()=>closeSheet("#ingSheet","#ingBg"));
 $("#porBg").addEventListener("click",()=>closeSheet("#porSheet","#porBg"));
 $("#qtyBg").addEventListener("click",()=>closeSheet("#qtySheet","#qtyBg"));
+$("#goalBg").addEventListener("click",()=>closeSheet("#goalSheet","#goalBg"));
 
 // Katalog-Tabs
 document.querySelectorAll("#screen-katalog .cat-tab").forEach(t => t.addEventListener("click", () => {
@@ -1120,6 +1241,7 @@ document.querySelectorAll("#logTypeTabs .cat-tab").forEach(t => t.addEventListen
 // Delegated clicks
 document.body.addEventListener("click", e => {
   const t = e.target;
+  const gRow = t.closest("[data-goal]"); if (gRow){ openGoalEditor(gRow.getAttribute("data-goal")); return; }
   const dOpen = t.closest("[data-day-open]"); if (dOpen){ openDayReview(dOpen.getAttribute("data-day-open")); return; }
   const dDel = t.getAttribute("data-day-del");
   if (dDel){ const day = state.days[reviewDay]; if (day){ day.entries = day.entries.filter(x=>x.id!==dDel); save(); if (reviewDay===state.openDay) renderToday(); renderHistory(); renderDayReview(); } return; }
@@ -1133,7 +1255,7 @@ document.body.addEventListener("click", e => {
   const dp = t.getAttribute("data-del-por"); if (dp){ if(confirm("Portion löschen?")){ state.portions=state.portions.filter(x=>x.id!==dp); save(); renderCatalog(); } return; }
 });
 
-function renderAll(){ renderToday(); renderCatalog(); fillSettings(); }
+function renderAll(){ renderToday(); renderCatalog(); renderZiele(); }
 function esc(s){ return String(s).replace(/[&<>"]/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m])); }
 
 function migrateState(){
@@ -1171,6 +1293,12 @@ function ensureOpenDay(){
   }
   save();
 }
+
+// Akkordeon: Phase & Sicherung – öffnet man eine, schließt die andere
+const accGroup = [$("#phaseWrap"), $("#backupWrap")];
+accGroup.forEach(el => el.addEventListener("toggle", () => {
+  if (el.open) accGroup.forEach(o => { if (o !== el && o.open) o.open = false; });
+}));
 
 // Init
 migrateState();
