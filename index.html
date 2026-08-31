@@ -317,9 +317,12 @@
       <div class="cat-tab active" data-cat="portions">Portionen</div>
       <div class="cat-tab" data-cat="ingredients">Zutaten</div>
     </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <input id="catSearch" type="text" placeholder="Suchen …" style="flex:1" autocomplete="off">
+      <button class="btn" id="catAdd" style="width:auto;padding:12px 18px;margin:0;flex-shrink:0">+</button>
+    </div>
     <div id="catList"></div>
-    <button class="btn" id="catAdd">+ Neu anlegen</button>
-    <p class="hint" id="catHint"></p>
+    <p class="hint" id="catHint" style="margin:10px 2px 0"></p>
   </div>
 </div>
 
@@ -410,6 +413,9 @@
   <div class="cat-tabs" id="logTypeTabs" style="padding:0 16px">
     <div class="cat-tab active" data-log="portions">Portionen</div>
     <div class="cat-tab" data-log="ingredients">Zutaten</div>
+  </div>
+  <div style="padding:8px 16px 0">
+    <input id="logSearch" type="text" placeholder="Suchen …" autocomplete="off">
   </div>
   <div class="sheet-body" id="logBody"></div>
 </div>
@@ -779,12 +785,16 @@ function setDot(sel, cls) { const el = $(sel); el.className = "dot " + cls; }
 
 // ================= RENDER: KATALOG =================
 let catMode = "portions";
+let catQuery = "";
 function renderCatalog() {
   const list = $("#catList");
+  const q = catQuery.trim().toLowerCase();
   if (catMode === "portions") {
     $("#catHint").textContent = "Portionen sind deine festen Zusammenstellungen. Beim Erfassen tippst du sie nur noch an.";
-    if (!state.portions.length) { list.innerHTML = '<div class="empty">Noch keine Portionen. Lege zuerst Zutaten an, dann kombiniere sie hier.</div>'; return; }
-    list.innerHTML = state.portions.map(p => {
+    let items = state.portions.slice().sort((a,b)=>a.name.localeCompare(b.name,"de"));
+    if (q) items = items.filter(p=>p.name.toLowerCase().includes(q));
+    if (!items.length) { list.innerHTML = '<div class="empty">' + (q ? "Keine Portion gefunden." : "Noch keine Portionen. Lege zuerst Zutaten an, dann kombiniere sie hier.") + '</div>'; return; }
+    list.innerHTML = items.map(p => {
       const t = portionTotals(p);
       return `<div class="list-item">
         <div class="li-main"><div class="li-name">${esc(p.name)}</div>
@@ -795,8 +805,10 @@ function renderCatalog() {
     }).join("");
   } else {
     $("#catHint").textContent = "Zutaten mit Nährwerten je 100 g. Basis für Portionen und für seltene Einzel-Einträge.";
-    if (!state.ingredients.length) { list.innerHTML = '<div class="empty">Noch keine Zutaten. Leg deine ersten Lebensmittel an.</div>'; return; }
-    list.innerHTML = state.ingredients.map(i => `
+    let items = state.ingredients.slice().sort((a,b)=>a.name.localeCompare(b.name,"de"));
+    if (q) items = items.filter(i=>i.name.toLowerCase().includes(q));
+    if (!items.length) { list.innerHTML = '<div class="empty">' + (q ? "Keine Zutat gefunden." : "Noch keine Zutaten. Leg deine ersten Lebensmittel an.") + '</div>'; return; }
+    list.innerHTML = items.map(i => `
       <div class="list-item">
         <div class="li-main"><div class="li-name">${esc(i.name)}</div>
         <div class="li-meta">100 g · ${round(i.kcal)} kcal · E ${round(i.p,1)} · F ${round(i.f,1)} · KH ${round(i.c,1)}</div></div>
@@ -913,11 +925,15 @@ function renderAgg(listEl, wrapEl, groups, labelFn){
 
 // ================= ERFASSEN =================
 let logMode = "portions";
+let logQuery = "";
 function renderLog() {
   const body = $("#logBody");
+  const q = logQuery.trim().toLowerCase();
   if (logMode === "portions") {
-    if (!state.portions.length) { body.innerHTML = '<div class="empty">Keine Portionen angelegt. Erstelle welche im Katalog.</div>'; return; }
-    body.innerHTML = state.portions.map(p => {
+    let items = state.portions.slice().sort((a,b)=>a.name.localeCompare(b.name,"de"));
+    if (q) items = items.filter(p=>p.name.toLowerCase().includes(q));
+    if (!items.length) { body.innerHTML = '<div class="empty">' + (q ? "Keine Portion gefunden." : "Keine Portionen angelegt. Erstelle welche im Katalog.") + '</div>'; return; }
+    body.innerHTML = items.map(p => {
       const t = portionTotals(p);
       return `<div class="pick" data-log-por="${p.id}">
         <div><div class="p-name">${esc(p.name)}</div><div class="p-meta">E ${round(t.p)} · F ${round(t.f)} · KH ${round(t.c)}</div></div>
@@ -925,8 +941,10 @@ function renderLog() {
       </div>`;
     }).join("");
   } else {
-    if (!state.ingredients.length) { body.innerHTML = '<div class="empty">Keine Zutaten angelegt.</div>'; return; }
-    body.innerHTML = state.ingredients.map(i => `
+    let items = state.ingredients.slice().sort((a,b)=>a.name.localeCompare(b.name,"de"));
+    if (q) items = items.filter(i=>i.name.toLowerCase().includes(q));
+    if (!items.length) { body.innerHTML = '<div class="empty">' + (q ? "Keine Zutat gefunden." : "Keine Zutaten angelegt.") + '</div>'; return; }
+    body.innerHTML = items.map(i => `
       <div class="pick" data-log-ing="${i.id}">
         <div><div class="p-name">${esc(i.name)}</div><div class="p-meta">je 100 g · ${round(i.kcal)} kcal</div></div>
         <div class="p-kcal">›</div>
@@ -1152,7 +1170,8 @@ document.querySelectorAll("nav.tabbar button").forEach(b => b.addEventListener("
 }));
 
 function openLog(dstr){
-  logTargetDay = dstr; logMode = "portions"; syncLogTabs(); renderLog();
+  logTargetDay = dstr; logMode = "portions"; logQuery = ""; if ($("#logSearch")) $("#logSearch").value = "";
+  syncLogTabs(); renderLog();
   const fixed = $("#logDayFixed");
   fixed.style.display = "block";
   fixed.textContent = "Wird eingetragen auf: " + dateLabel(dstr) + (dstr===todayStr() ? " (heute)" : "");
@@ -1228,15 +1247,19 @@ $("#goalBg").addEventListener("click",()=>closeSheet("#goalSheet","#goalBg"));
 // Katalog-Tabs
 document.querySelectorAll("#screen-katalog .cat-tab").forEach(t => t.addEventListener("click", () => {
   document.querySelectorAll("#screen-katalog .cat-tab").forEach(x=>x.classList.remove("active"));
-  t.classList.add("active"); catMode = t.dataset.cat; renderCatalog();
+  t.classList.add("active"); catMode = t.dataset.cat;
+  catQuery = ""; $("#catSearch").value = "";
+  renderCatalog();
 }));
+$("#catSearch").addEventListener("input", e => { catQuery = e.target.value; renderCatalog(); });
 $("#catAdd").addEventListener("click", () => { catMode==="portions" ? openPorForm() : openIngForm(); });
 
 // Log-Tabs
 function syncLogTabs(){ document.querySelectorAll("#logTypeTabs .cat-tab").forEach(x=>x.classList.toggle("active", x.dataset.log===logMode)); }
 document.querySelectorAll("#logTypeTabs .cat-tab").forEach(t => t.addEventListener("click", () => {
-  logMode = t.dataset.log; syncLogTabs(); renderLog();
+  logMode = t.dataset.log; logQuery = ""; $("#logSearch").value = ""; syncLogTabs(); renderLog();
 }));
+$("#logSearch").addEventListener("input", e => { logQuery = e.target.value; renderLog(); });
 
 // Delegated clicks
 document.body.addEventListener("click", e => {
